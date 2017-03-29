@@ -19,8 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('fullname');
             $table->boolean('confirmed');
-            $table->string('auth_token', 100);
-            $table->char('gender','1');
+            $table->string('api_token', 100);
             $table->timestamps();
         });
     }
