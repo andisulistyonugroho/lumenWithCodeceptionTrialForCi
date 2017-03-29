@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
@@ -29,4 +29,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public static function userLogin($email,$password) {
+        $data = self::where('email', '=', $email)
+            ->where('confirmed', '=', 1)
+            ->first();
+        if (empty($data)) {
+            return null;
+        } else {
+            if (app('hash')->check($password,$data->password) === true) {
+                return $data;
+            } else {
+                return null;
+            }
+        }
+    }
 }

@@ -14,3 +14,7 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->post('/login','UserController@login');
+$app->post('/register','UserController@register');
+$app->get('/profile[/{id}]',['middleware' => 'auth', 'uses' => 'UserController@profile']);
