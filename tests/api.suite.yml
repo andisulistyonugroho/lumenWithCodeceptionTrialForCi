@@ -1,0 +1,7 @@
+class_name: ApiTester
+modules:
+    enabled:
+        - REST:
+            depends: Lumen
+            part: Json
+        - \Helper\Api
