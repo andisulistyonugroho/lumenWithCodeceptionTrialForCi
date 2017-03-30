@@ -18,13 +18,13 @@ class UserController extends Controller
     }
 
     //
-    
+
     public function login(Request $request) {
         $this->validate($request, [
            'email' => 'bail|required|email',
-           'password' => 'required' 
+           'password' => 'required'
         ]);
-           
+
        $data = User::userLogin($request->input('email'),$request->input('password'));
        if (!empty($data)) {
            $response = $data;
@@ -33,7 +33,19 @@ class UserController extends Controller
            $response = ['error' => 'Wrong username or password'];
            $status_code = 401;
        }
-       
+
        return response()->json($response,$status_code);
+    }
+
+    public function profile($id = null) {
+        try {
+            $data = User::find($id);
+            $response = $data;
+            $status_code = 200;
+        } catch (\Exception $e) {
+            $response = ['error' => $e->getMessage()];
+            $status_code = $e->getCode();
+        }
+        return response()->json($response,$status_code);
     }
 }
