@@ -15,6 +15,20 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+*/
 $app->post('/login','UserController@login');
 $app->post('/register','UserController@register');
 $app->get('/profile[/{id}]',['middleware' => 'auth', 'uses' => 'UserController@profile']);
+
+/*
+|--------------------------------------------------------------------------
+| Customer Routes
+|--------------------------------------------------------------------------
+*/
+$app->group(['prefix' => 'customers', 'middleware' => 'auth'], function () use ($app) {
+    $app->post('create', ['uses' => 'CustomerController@create']);
+});
